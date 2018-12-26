@@ -1,0 +1,27 @@
+{
+  "name": "instacli",
+  "version": "1.0.0",
+  "description": "A Command-Line Interface to upload photos to Instagram with hashtags generation",
+  "author": "Jérémie Zarca <jeremie.zarca@gmail.com>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "clear": "^0.1.0",
+    "clui": "^0.3.6",
+    "configstore": "^4.0.0",
+    "figlet": "^1.2.1",
+    "inquirer": "^6.2.1",
+    "instagram-web-api": "https://github.com/densch1/instagram-web-api.git",
+    "lodash": "^4.17.11",
+    "minimist": "^1.2.0",
+    "node-hashtagify": "^1.0.1",
+    "tough-cookie-filestore2": "^1.0.0"
+  },
+  "bin": {
+    "insta": "./index.js"
+  }
+}
