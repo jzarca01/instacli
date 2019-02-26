@@ -25,7 +25,7 @@ const {
   setCredentials
 } = require('./lib/credentials');
 
-const { getKanyeCaption } = require('./lib/kanye');
+const { getKanyeCaption, getDrakeCaption } = require('./lib/kanye');
 
 clear();
 console.log(
@@ -53,6 +53,11 @@ const uploadToInstagram = async details => {
 
     if (details.kanye) {
       caption = await getKanyeCaption();
+    } else if (details.drake) {
+      const drakeType =
+        details.drakeType !== 'any will be fine' ? details.drakeType : null;
+      const drakeCaption = await getDrakeCaption(drakeType);
+      caption = drakeCaption.slice(0, 2).join(' - ');
     } else {
       caption = details.caption;
       const hashtags = details.hashtags.replace(/\s/g, '').split(',');
@@ -77,6 +82,7 @@ const uploadToInstagram = async details => {
 
     spinner = new Spinner('Uploading photo...');
     spinner.start();
+    console.log(caption);
     const { media } = await client.uploadPhoto({
       photo: details.filename,
       caption
