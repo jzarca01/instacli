@@ -60,19 +60,19 @@ const uploadToInstagram = async details => {
       caption = drakeCaption.slice(0, 2).join(' - ');
     } else {
       caption = details.caption;
-      const hashtags = details.hashtags.replace(/\s/g, '').split(',');
+    }
 
-      if (hashtags.length) {
-        spinner = new Spinner('Generating hashtags...');
-        spinner.start();
-        const related = await hash.getRelated(hashtags);
-        related.map(tag => {
-          return tag.related.map(
-            hashtag => (caption = caption + ` #${hashtag.name}`)
-          );
-        });
-        spinner.stop();
-      }
+    const hashtags = details.hashtags.replace(/\s/g, '').split(',');
+    if (hashtags.length) {
+      spinner = new Spinner('Generating hashtags...');
+      spinner.start();
+      const related = await hash.getRelated(hashtags);
+      related.map(tag => {
+        return tag.related.map(
+          hashtag => (caption = caption + ` #${hashtag.name}`)
+        );
+      });
+      spinner.stop();
     }
 
     spinner = new Spinner('Logging into Instagram account...');

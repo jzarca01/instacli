@@ -1,6 +1,6 @@
 {
   "name": "instacli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Command-Line Interface to upload photos to Instagram with hashtags generation",
   "author": "Jérémie Zarca <jeremie.zarca@gmail.com>",
   "main": "index.js",
