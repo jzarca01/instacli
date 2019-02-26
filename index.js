@@ -25,6 +25,8 @@ const {
   setCredentials
 } = require('./lib/credentials');
 
+const { getKanyeCaption } = require('./lib/kanye');
+
 clear();
 console.log(
   chalk.yellow(figlet.textSync('#InstaCLI', { horizontalLayout: 'full' }))
@@ -41,6 +43,7 @@ const run = async () => {
 
 const uploadToInstagram = async details => {
   let spinner = new Spinner('Loading...');
+  let caption;
   try {
     if (fs.existsSync(COOKIE_PATH)) {
       fs.unlink(COOKIE_PATH);
@@ -48,19 +51,23 @@ const uploadToInstagram = async details => {
     const cookieStore = new FileCookieStore(COOKIE_PATH);
     const client = new Instagram(getCredentials(), cookieStore);
 
-    let caption = details.caption;
-    const hashtags = details.hashtags.replace(/\s/g, '').split(',');
+    if (details.kanye) {
+      caption = await getKanyeCaption();
+    } else {
+      caption = details.caption;
+      const hashtags = details.hashtags.replace(/\s/g, '').split(',');
 
-    if (hashtags.length) {
-      spinner = new Spinner('Generating hashtags...');
-      spinner.start();
-      const related = await hash.getRelated(hashtags);
-      related.map(tag => {
-        return tag.related.map(
-          hashtag => (caption = caption + ` #${hashtag.name}`)
-        );
-      });
-      spinner.stop();
+      if (hashtags.length) {
+        spinner = new Spinner('Generating hashtags...');
+        spinner.start();
+        const related = await hash.getRelated(hashtags);
+        related.map(tag => {
+          return tag.related.map(
+            hashtag => (caption = caption + ` #${hashtag.name}`)
+          );
+        });
+        spinner.stop();
+      }
     }
 
     spinner = new Spinner('Logging into Instagram account...');
