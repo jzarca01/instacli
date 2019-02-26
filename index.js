@@ -52,12 +52,13 @@ const uploadToInstagram = async details => {
     const client = new Instagram(getCredentials(), cookieStore);
 
     if (details.kanye) {
-      caption = await getKanyeCaption();
+      const kanyeCaption = await getKanyeCaption();
+      caption = kanyeCaption.join(' - Kanye West');
     } else if (details.drake) {
       const drakeType =
         details.drakeType !== 'any will be fine' ? details.drakeType : null;
       const drakeCaption = await getDrakeCaption(drakeType);
-      caption = drakeCaption.slice(0, 2).join(' - ');
+      caption = drakeCaption[0].join(' - Drake');
     } else {
       caption = details.caption;
     }
